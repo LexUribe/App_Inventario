@@ -18,12 +18,12 @@ import {
   response,
 } from '@loopback/rest';
 import {Mouse} from '../models';
-import {MotherboardRepository} from '../repositories';
+import {MouseRepository} from '../repositories';
 
 export class MouseController {
   constructor(
-    @repository(MotherboardRepository)
-    public motherboardRepository : MotherboardRepository,
+    @repository(MouseRepository)
+    public mouseRepository : MouseRepository,
   ) {}
 
   @post('/mice')
@@ -44,7 +44,7 @@ export class MouseController {
     })
     mouse: Omit<Mouse, 'id'>,
   ): Promise<Mouse> {
-    return this.motherboardRepository.create(mouse);
+    return this.mouseRepository.create(mouse);
   }
 
   @get('/mice/count')
@@ -55,7 +55,7 @@ export class MouseController {
   async count(
     @param.where(Mouse) where?: Where<Mouse>,
   ): Promise<Count> {
-    return this.motherboardRepository.count(where);
+    return this.mouseRepository.count(where);
   }
 
   @get('/mice')
@@ -73,7 +73,7 @@ export class MouseController {
   async find(
     @param.filter(Mouse) filter?: Filter<Mouse>,
   ): Promise<Mouse[]> {
-    return this.motherboardRepository.find(filter);
+    return this.mouseRepository.find(filter);
   }
 
   @patch('/mice')
@@ -92,7 +92,7 @@ export class MouseController {
     mouse: Mouse,
     @param.where(Mouse) where?: Where<Mouse>,
   ): Promise<Count> {
-    return this.motherboardRepository.updateAll(mouse, where);
+    return this.mouseRepository.updateAll(mouse, where);
   }
 
   @get('/mice/{id}')
@@ -108,7 +108,7 @@ export class MouseController {
     @param.path.string('id') id: string,
     @param.filter(Mouse, {exclude: 'where'}) filter?: FilterExcludingWhere<Mouse>
   ): Promise<Mouse> {
-    return this.motherboardRepository.findById(id, filter);
+    return this.mouseRepository.findById(id, filter);
   }
 
   @patch('/mice/{id}')
@@ -126,7 +126,7 @@ export class MouseController {
     })
     mouse: Mouse,
   ): Promise<void> {
-    await this.motherboardRepository.updateById(id, mouse);
+    await this.mouseRepository.updateById(id, mouse);
   }
 
   @put('/mice/{id}')
@@ -137,7 +137,7 @@ export class MouseController {
     @param.path.string('id') id: string,
     @requestBody() mouse: Mouse,
   ): Promise<void> {
-    await this.motherboardRepository.replaceById(id, mouse);
+    await this.mouseRepository.replaceById(id, mouse);
   }
 
   @del('/mice/{id}')
@@ -145,6 +145,6 @@ export class MouseController {
     description: 'Mouse DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.motherboardRepository.deleteById(id);
+    await this.mouseRepository.deleteById(id);
   }
 }
